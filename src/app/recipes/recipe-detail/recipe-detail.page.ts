@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {map, Observable, tap} from 'rxjs';
 import {RecipesService} from '../recipes.service';
 import {Recipe} from '../recipe.model';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,6 +17,7 @@ export class RecipeDetailPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private alertCtrl: AlertController,
     private recipesService: RecipesService
   ) {
   }
@@ -34,9 +36,30 @@ export class RecipeDetailPage implements OnInit {
     );
   }
 
-  delete(recipeId: string) {
-    this.recipesService.deleteRecipe(recipeId);
-    this.router.navigate(['/recipes']);
+  async delete(recipeId: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Are you sure to Delete?',
+      message: 'will delete sadfsdf',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: (blah) => {
+            console.log(`Confirm Cancel: ${blah}`);
+          }
+        },
+        {
+          text: 'Delete',
+          // cssClass: 'secondary',
+          handler: () => {
+            this.recipesService.deleteRecipe(recipeId);
+            this.router.navigate(['/recipes']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
