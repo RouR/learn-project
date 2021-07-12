@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Route} from '@angular/router';
-import {filter, map, Observable, Subject, takeUntil, tap} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {map, Observable, tap} from 'rxjs';
 import {RecipesService} from '../recipes.service';
 import {Recipe} from '../recipe.model';
 
@@ -15,6 +15,7 @@ export class RecipeDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private recipesService: RecipesService
   ) {
   }
@@ -23,13 +24,19 @@ export class RecipeDetailPage implements OnInit {
     this.loadedRecipe$ = this.activatedRoute.paramMap.pipe(
       map(params => this.recipesService.getRecipe(params.get('recipeId'))),
       tap(recipe => {
-        console.log(recipe);
+          // console.log(recipe);
           if (!recipe) {
             console.warn('todo navigate');
+            this.router.navigate(['/recipes']);
           }
         }
       )
     );
+  }
+
+  delete(recipeId: string) {
+    this.recipesService.deleteRecipe(recipeId);
+    this.router.navigate(['/recipes']);
   }
 
 }
