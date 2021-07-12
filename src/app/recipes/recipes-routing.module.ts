@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 
 import {RecipesPage} from './recipes.page';
 import {RecipeDetailPage} from './recipe-detail/recipe-detail.page';
+import {RecipeListItemComponent} from './recipe-list-item/recipe-list-item.component';
 
 const routes: Routes = [
   {
@@ -27,9 +28,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
   ],
-  declarations:[
+  declarations: [
     RecipesPage,
-    RecipeDetailPage
+    RecipeDetailPage,
+    RecipeListItemComponent
   ],
   exports: [RouterModule],
 })
