@@ -8,7 +8,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesPageModule)
+        loadChildren: () => import('./recipes/recipes-routing.module').then(m => m.RecipesModule)
       }
     ]
   }
